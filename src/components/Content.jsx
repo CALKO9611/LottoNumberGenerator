@@ -28,7 +28,7 @@ const Box = styled.div`
   width: 100px;
   height: 100px;
   border: 2px solid #333;
-  border-radius: 5px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
