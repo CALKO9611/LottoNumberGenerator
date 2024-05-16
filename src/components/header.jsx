@@ -15,7 +15,7 @@ const HeaderComponent = styled.header`
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     color: #333;
   }
