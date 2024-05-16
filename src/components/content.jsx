@@ -5,22 +5,28 @@ const ContentComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   height: 100vh;
-  margin-top: 50px;
+  padding-top: 80px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
 `;
 
 const BoxContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   align-items: center;
   justify-items: center;
+  margin: 50px auto;
 `;
 
 const Box = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border: 2px solid #333;
   border-radius: 5px;
   display: flex;
@@ -32,11 +38,10 @@ const Box = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
 `;
 
 const StyledButton = styled.button`
-  margin-top: 50px;
   padding: 10px 20px;
   font-size: 18px;
   background-color: ${(props) => props.color || "#4caf50"};
@@ -44,10 +49,10 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {
-    background-color: #45a049;
+    background-color: black;
   }
 `;
 
@@ -66,8 +71,19 @@ export default function Content() {
     setLottoNumbers(numbers);
   };
 
+  const dongHangSite = () => {
+    window.open("https://www.dhlottery.co.kr/");
+  };
+
+  const copyToClipboard = () => {
+    const textToCopy = lottoNumbers.join(", ");
+    navigator.clipboard.writeText(textToCopy);
+    alert("로또 번호가 복사되었습니다.");
+  };
+
   return (
     <ContentComponent>
+      <h2>이번 생은 로번생 살자!</h2>
       <BoxContainer>
         {[1, 2, 3, 4, 5, 6].map((index) => (
           <Box key={index}>{lottoNumbers[index - 1]}</Box>
@@ -79,10 +95,15 @@ export default function Content() {
           <br />
           생성 버튼
         </StyledButton>
-        <StyledButton color="blue">
-          다른 번호
+        <StyledButton onClick={copyToClipboard} color="red">
+          로또 번호
           <br />
-          예시 버튼
+          복사 버튼
+        </StyledButton>
+        <StyledButton onClick={dongHangSite} color="blue">
+          동행복권
+          <br />
+          사이트 이동
         </StyledButton>
       </ButtonContainer>
     </ContentComponent>
