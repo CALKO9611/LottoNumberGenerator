@@ -34,6 +34,8 @@ const Box = styled.div`
   align-items: center;
   font-size: 20px;
   font-weight: bold;
+  color: #fff;
+  background-color: ${(props) => props.backgroundColor || "#fff"};
 `;
 
 const ButtonContainer = styled.div`
@@ -71,6 +73,22 @@ export default function Content() {
     setLottoNumbers(numbers);
   };
 
+  const getBackgroundColor = (number) => {
+    if (number >= 1 && number <= 10) {
+      return "#f2b720";
+    } else if (number >= 11 && number <= 20) {
+      return "#4072ac";
+    } else if (number >= 21 && number <= 30) {
+      return "#de4c0e";
+    } else if (number >= 31 && number <= 40) {
+      return "#9195a4";
+    } else if (number >= 41 && number <= 45) {
+      return "#13be4b";
+    } else {
+      return "#fff";
+    }
+  };
+
   const dongHangSite = () => {
     window.open("https://www.dhlottery.co.kr/");
   };
@@ -86,7 +104,12 @@ export default function Content() {
       <h2>이번 생은 로번생 살자!</h2>
       <BoxContainer>
         {[1, 2, 3, 4, 5, 6].map((index) => (
-          <Box key={index}>{lottoNumbers[index - 1]}</Box>
+          <Box
+            key={index}
+            backgroundColor={getBackgroundColor(lottoNumbers[index - 1])}
+          >
+            {lottoNumbers[index - 1]}
+          </Box>
         ))}
       </BoxContainer>
       <ButtonContainer>
