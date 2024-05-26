@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import LastDrawResults from "./LastDrawResults";
 
 const ContentComponent = styled.div`
   display: flex;
@@ -137,6 +138,7 @@ export default function Content() {
           사이트 이동
         </StyledButton>
       </ButtonContainer>
+      <LastDrawResults />
     </ContentComponent>
   );
 }
