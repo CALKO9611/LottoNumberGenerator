@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import LastDrawResults from "./LastDrawResults";
 
 const ContentComponent = styled.div`
   display: flex;
@@ -40,7 +39,7 @@ const Box = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 20px;
+  margin: 40px 0px;
   display: flex;
   gap: 15px;
 `;
