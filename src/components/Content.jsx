@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import LastDrawResults from "./LastDrawResults";
 
 const ContentComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  padding-top: 40px;
 
   h2 {
     font-size: 24px;
@@ -40,7 +38,7 @@ const Box = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin: 40px 0px;
+  margin: 20px 0px;
   display: flex;
   gap: 15px;
 `;
@@ -111,16 +109,6 @@ export default function Content() {
 
   return (
     <ContentComponent>
-      {/* <h2>이번 생은 로번생 살자!</h2> */}
-      {lottoNumbers.map((line, lineIndex) => (
-        <BoxContainer key={lineIndex}>
-          {line.map((number, index) => (
-            <Box key={index} backgroundColor={getBackgroundColor(number)}>
-              {number}
-            </Box>
-          ))}
-        </BoxContainer>
-      ))}
       <ButtonContainer>
         <StyledButton onClick={generateLottoNumbers}>
           로또 번호
@@ -138,7 +126,15 @@ export default function Content() {
           사이트 이동
         </StyledButton>
       </ButtonContainer>
-      <LastDrawResults />
+      {lottoNumbers.map((line, lineIndex) => (
+        <BoxContainer key={lineIndex}>
+          {line.map((number, index) => (
+            <Box key={index} backgroundColor={getBackgroundColor(number)}>
+              {number}
+            </Box>
+          ))}
+        </BoxContainer>
+      ))}
     </ContentComponent>
   );
 }
