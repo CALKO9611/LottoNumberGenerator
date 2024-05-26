@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 
+// 스타일 정의
 const LastDrawContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px 0;
+  margin-bottom: 80px; /* 바닥 마진 추가 */
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -21,6 +23,7 @@ const Title = styled.h2`
 
 const NumberList = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
 `;
 
@@ -38,9 +41,24 @@ const NumberBox = styled.div`
   background-color: ${(props) => props.backgroundColor || "#fff"};
 `;
 
+const BonusBox = styled(NumberBox)``;
+
+const PlusContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const PlusSign = styled.span`
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 5px;
+`;
+
+// 컴포넌트 정의
 export default function LastDrawResults() {
-  // 임시 번호
+  // 임시 데이터, 실제 데이터는 props나 API 호출을 통해 전달받을 수 있습니다.
   const winningNumbers = [3, 11, 24, 32, 38, 45];
+  const bonusNumber = 8;
 
   const getBackgroundColor = (number) => {
     if (number >= 1 && number <= 10) {
@@ -67,6 +85,12 @@ export default function LastDrawResults() {
             {number}
           </NumberBox>
         ))}
+        <PlusContainer>
+          <PlusSign>+</PlusSign>
+        </PlusContainer>
+        <BonusBox backgroundColor={getBackgroundColor(bonusNumber)}>
+          {bonusNumber}
+        </BonusBox>
       </NumberList>
     </LastDrawContainer>
   );
