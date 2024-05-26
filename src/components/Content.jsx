@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import LastDrawResults from "./LastDrawResults";
 
 const ContentComponent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  padding-top: 80px;
+  padding-top: 40px;
 
   h2 {
     font-size: 24px;
@@ -18,15 +19,15 @@ const ContentComponent = styled.div`
 const BoxContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
+  gap: 5px;
   align-items: center;
   justify-items: center;
-  margin: 50px auto;
+  margin: 5px auto;
 `;
 
 const Box = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border: 2px solid #333;
   border-radius: 50%;
   display: flex;
@@ -39,12 +40,14 @@ const Box = styled.div`
 `;
 
 const ButtonContainer = styled.div`
+  margin-top: 20px;
   display: flex;
   gap: 15px;
 `;
 
 const StyledButton = styled.button`
-  padding: 10px 20px;
+  padding: 10px 10px;
+  width: 150px;
   font-size: 18px;
   background-color: ${(props) => props.color || "#4caf50"};
   color: white;
@@ -59,18 +62,25 @@ const StyledButton = styled.button`
 `;
 
 export default function Content() {
-  const [lottoNumbers, setLottoNumbers] = useState([]);
+  const initialLottoNumbers = Array.from({ length: 5 }, () =>
+    Array(6).fill(null)
+  );
+  const [lottoNumbers, setLottoNumbers] = useState(initialLottoNumbers);
 
   const generateLottoNumbers = () => {
-    const numbers = [];
-    while (numbers.length < 6) {
-      const randomNum = Math.floor(Math.random() * 45) + 1;
-      if (!numbers.includes(randomNum)) {
-        numbers.push(randomNum);
+    const allNumbers = [];
+    for (let i = 0; i < 5; i++) {
+      const numbers = [];
+      while (numbers.length < 6) {
+        const randomNum = Math.floor(Math.random() * 45) + 1;
+        if (!numbers.includes(randomNum)) {
+          numbers.push(randomNum);
+        }
       }
+      numbers.sort((a, b) => a - b);
+      allNumbers.push(numbers);
     }
-    numbers.sort((a, b) => a - b);
-    setLottoNumbers(numbers);
+    setLottoNumbers(allNumbers);
   };
 
   const getBackgroundColor = (number) => {
@@ -94,24 +104,23 @@ export default function Content() {
   };
 
   const copyToClipboard = () => {
-    const textToCopy = lottoNumbers.join(", ");
+    const textToCopy = lottoNumbers.map((line) => line.join(", ")).join("\n");
     navigator.clipboard.writeText(textToCopy);
     alert("로또 번호가 복사되었습니다.");
   };
 
   return (
     <ContentComponent>
-      <h2>이번 생은 로번생 살자!</h2>
-      <BoxContainer>
-        {[1, 2, 3, 4, 5, 6].map((index) => (
-          <Box
-            key={index}
-            backgroundColor={getBackgroundColor(lottoNumbers[index - 1])}
-          >
-            {lottoNumbers[index - 1]}
-          </Box>
-        ))}
-      </BoxContainer>
+      {/* <h2>이번 생은 로번생 살자!</h2> */}
+      {lottoNumbers.map((line, lineIndex) => (
+        <BoxContainer key={lineIndex}>
+          {line.map((number, index) => (
+            <Box key={index} backgroundColor={getBackgroundColor(number)}>
+              {number}
+            </Box>
+          ))}
+        </BoxContainer>
+      ))}
       <ButtonContainer>
         <StyledButton onClick={generateLottoNumbers}>
           로또 번호
