@@ -98,9 +98,7 @@ export default function LastDrawResults() {
         <div>로또 결과를 불러오는 중입니다...</div>
       ) : (
         <>
-          <Title>
-            {drawNumber} 회차 당첨 번호 ({lottoData.drwNoDate})
-          </Title>
+          <Title>지난 회차 당첨 번호 ({lottoData.drwNoDate})</Title>
           <NumberList>
             {[
               lottoData.drwtNo1,
