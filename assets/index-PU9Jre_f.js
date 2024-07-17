@@ -57,7 +57,7 @@ Error generating stack: `+i.message+`
     font-weight: bold;
     color: #333;
   }
-`;function iy(){return j.jsxs(oy,{children:[j.jsx("img",{src:"/public/LottoNumberGenerator icon.svg",alt:"로번생 로고"}),j.jsx("h1",{children:"로번생"})]})}const _s=e=>e>=1&&e<=10?"#f2b720":e>=11&&e<=20?"#4072ac":e>=21&&e<=30?"#de4c0e":e>=31&&e<=40?"#9195a4":e>=41&&e<=45?"#13be4b":"#fff",ly=ae.div`
+`;function iy(){return j.jsxs(oy,{children:[j.jsx("img",{src:"/public/LottoNumberGeneratorIcon",alt:"로번생 로고"}),j.jsx("h1",{children:"로번생"})]})}const _s=e=>e>=1&&e<=10?"#f2b720":e>=11&&e<=20?"#4072ac":e>=21&&e<=30?"#de4c0e":e>=31&&e<=40?"#9195a4":e>=41&&e<=45?"#13be4b":"#fff",ly=ae.div`
   display: flex;
   flex-direction: column;
   align-items: center;
