@@ -1,12 +1,14 @@
 import { styled } from "styled-components";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import getBackgroundColor from "../utils/getBackgroundColor";
 
-// 스타일 정의
 const LastDrawContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px 0;
-  margin-bottom: 80px; /* 바닥 마진 추가 */
+  margin-bottom: 80px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,7 +40,7 @@ const NumberBox = styled.div`
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background-color: ${(props) => props.backgroundColor || "#fff"};
+  background-color: ${(props) => props.$backgroundColor || "#fff"};
 `;
 
 const BonusBox = styled(NumberBox)``;
@@ -54,44 +56,66 @@ const PlusSign = styled.span`
   margin: 0 5px;
 `;
 
-// 컴포넌트 정의
-export default function LastDrawResults() {
-  // 임시 데이터, 실제 데이터는 props나 API 호출을 통해 전달받을 수 있습니다.
-  const winningNumbers = [3, 11, 24, 32, 38, 45];
-  const bonusNumber = 8;
+const ErrorMessage = styled.div`
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+`;
 
-  const getBackgroundColor = (number) => {
-    if (number >= 1 && number <= 10) {
-      return "#f2b720";
-    } else if (number >= 11 && number <= 20) {
-      return "#4072ac";
-    } else if (number >= 21 && number <= 30) {
-      return "#de4c0e";
-    } else if (number >= 31 && number <= 40) {
-      return "#9195a4";
-    } else if (number >= 41 && number <= 45) {
-      return "#13be4b";
-    } else {
-      return "#fff";
-    }
-  };
+export default function LastDrawResults() {
+  const [lottoData, setLottoData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const drawNumber = 1123;
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`/api${drawNumber}`);
+        setLottoData(response.data);
+      } catch (error) {
+        setError("데이터를 가져오는 중 오류가 발생했습니다.");
+        console.error(error);
+      }
+    };
+
+    getData();
+  }, [drawNumber]);
 
   return (
     <LastDrawContainer>
-      <Title>지난 회차 당첨 번호</Title>
-      <NumberList>
-        {winningNumbers.map((number, index) => (
-          <NumberBox key={index} backgroundColor={getBackgroundColor(number)}>
-            {number}
-          </NumberBox>
-        ))}
-        <PlusContainer>
-          <PlusSign>+</PlusSign>
-        </PlusContainer>
-        <BonusBox backgroundColor={getBackgroundColor(bonusNumber)}>
-          {bonusNumber}
-        </BonusBox>
-      </NumberList>
+      {error ? (
+        <ErrorMessage>{error}</ErrorMessage>
+      ) : !lottoData ? (
+        <div>로또 결과를 불러오는 중입니다...</div>
+      ) : (
+        <>
+          <Title>지난 회차 당첨 번호 ({lottoData.drwNoDate})</Title>
+          <NumberList>
+            {[
+              lottoData.drwtNo1,
+              lottoData.drwtNo2,
+              lottoData.drwtNo3,
+              lottoData.drwtNo4,
+              lottoData.drwtNo5,
+              lottoData.drwtNo6,
+            ].map((number, index) => (
+              <NumberBox
+                key={index}
+                $backgroundColor={getBackgroundColor(number)}
+              >
+                {number}
+              </NumberBox>
+            ))}
+            <PlusContainer>
+              <PlusSign>+</PlusSign>
+            </PlusContainer>
+            <BonusBox $backgroundColor={getBackgroundColor(lottoData.bnusNo)}>
+              {lottoData.bnusNo}
+            </BonusBox>
+          </NumberList>
+        </>
+      )}
     </LastDrawContainer>
   );
 }
