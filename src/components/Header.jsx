@@ -24,7 +24,10 @@ const HeaderComponent = styled.header`
 export default function Header() {
   return (
     <HeaderComponent>
-      <img src="/public/LottoNumberGeneratorIcon" alt="로번생 로고" />
+      <img
+        src="https://CALKO9611.github.io/LottoNumberGenerator/public/LottoNumberGeneratorIcon"
+        alt="로번생 로고"
+      />
       <h1>로번생</h1>
     </HeaderComponent>
   );
