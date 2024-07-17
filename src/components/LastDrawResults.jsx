@@ -66,8 +66,6 @@ export default function LastDrawResults() {
   const [lottoData, setLottoData] = useState(null);
   const [error, setError] = useState(null);
 
-  // const drawNumber = 1123;
-
   const calculateDrawNumber = () => {
     const firstDrawDate = new Date("2002-12-07");
     const today = new Date();
@@ -100,7 +98,9 @@ export default function LastDrawResults() {
         <div>로또 결과를 불러오는 중입니다...</div>
       ) : (
         <>
-          <Title>지난 회차 당첨 번호 ({lottoData.drwNoDate})</Title>
+          <Title>
+            {drawNumber} 회차 당첨 번호 ({lottoData.drwNoDate})
+          </Title>
           <NumberList>
             {[
               lottoData.drwtNo1,
