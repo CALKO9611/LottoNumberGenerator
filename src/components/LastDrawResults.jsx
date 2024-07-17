@@ -66,10 +66,20 @@ export default function LastDrawResults() {
   const [lottoData, setLottoData] = useState(null);
   const [error, setError] = useState(null);
 
-  const drawNumber = 1123;
+  // const drawNumber = 1123;
+
+  const calculateDrawNumber = () => {
+    const firstDrawDate = new Date("2002-12-07");
+    const today = new Date();
+    const timeDiff = today - firstDrawDate;
+    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const drawNumber = Math.floor(daysDiff / 7) + 1;
+    return drawNumber;
+  };
 
   useEffect(() => {
     const getData = async () => {
+      const drawNumber = calculateDrawNumber();
       try {
         const response = await axios.get(`/api${drawNumber}`);
         setLottoData(response.data);
@@ -80,7 +90,7 @@ export default function LastDrawResults() {
     };
 
     getData();
-  }, [drawNumber]);
+  }, []);
 
   return (
     <LastDrawContainer>
